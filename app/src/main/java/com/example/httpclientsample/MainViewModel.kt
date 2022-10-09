@@ -2,31 +2,20 @@ package com.example.httpclientsample
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.ktor.client.*
-import io.ktor.client.engine.android.*
-import io.ktor.client.engine.cio.*
-import io.ktor.client.plugins.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel: ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val repository: MainRepository
+): ViewModel() {
     val bookInfoStr = MutableStateFlow("Hi Ktor")
 
     fun getBookInfo() {
-        val client = HttpClient(CIO) {
-            install(HttpTimeout) {
-                requestTimeoutMillis = 10000
-            }
-        }
-        val address = Url("https://www.googleapis.com/books/v1/volumes?q=android")
         viewModelScope.launch {
-            val response = client.get {
-                url(address.toString())
-            }.bodyAsText()
-
+            val response = repository.getBook()
             bookInfoStr.value = response.run { take(500).plus("\n\nHallo Kator") }
         }
     }
