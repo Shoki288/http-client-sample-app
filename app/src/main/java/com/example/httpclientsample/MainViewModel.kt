@@ -16,7 +16,9 @@ class MainViewModel @Inject constructor(
     fun getBookInfo() {
         viewModelScope.launch {
             val response = repository.getBook()
-            bookInfoStr.value = response.run { take(500).plus("\n\nHallo Kator") }
+            bookInfoStr.value = response.items.joinToString(separator = "\n") {
+                it.volumeInfo.title
+            }
         }
     }
 }
