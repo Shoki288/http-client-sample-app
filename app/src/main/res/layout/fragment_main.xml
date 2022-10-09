@@ -30,12 +30,23 @@
             app:layout_constraintGuide_percent="0.7" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/coroutineBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="APIたたく"
+            android:text="APIたたく(Coroutine)"
             android:onClick="@{() -> viewModel.getBookInfo()}"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/rxjavaBtn"
+            app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/rxjavaBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="APIたたく(RxJava)"
+            android:onClick="@{() -> viewModel.getBookInfoRxJava()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/coroutineBtn"
             app:layout_constraintTop_toBottomOf="@id/guideline" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

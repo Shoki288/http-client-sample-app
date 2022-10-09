@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.http.*
 import io.ktor.serialization.gson.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,7 +34,8 @@ object ApiModule {
             }
         }
         install(ContentNegotiation) {
-            gson()
+            register(ContentType.Application.Json, GsonConverter())
+            // TODO xmlのconverterを作る
         }
     }
 
